@@ -2,6 +2,9 @@ import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
+delete process.env.ELECTRON_ENABLE_SECURITY_WARNINGS;
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = 'true';
+
 let win, serve;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
@@ -13,13 +16,15 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    x: 0,
+    x: size.width/2,
     y: 0,
-    width: size.width,
+    width: size.width/2,
     height: size.height,
     webPreferences: {
       nodeIntegration: true,
+      webSecurity: false,
     },
+    
   });
 
   if (serve) {
